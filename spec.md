@@ -2,56 +2,96 @@
 
 ## Decision required
 
-Dr. Lena Brandt needs a ranked short list of human SOD1 residues that appear available for mutagenesis: positions that appear on the outside of the supplied model, have strong residue-level confidence, and are unlikely to disrupt SOD1 function. The output must also provide a clearly explained set-aside list, including the six metal-coordinating histidines and residues that may contact the other SOD1 copy.
+Dr. Lena Brandt needs a short, ranked list of human SOD1 residue numbers that appear available for mutagenesis: positions that appear on the outside of the supplied model, have strong individual residue-level confidence, and are unlikely to disrupt SOD1 function. She also needs a separate set-aside list.
 
-This is a screening decision for choosing positions to test, not a guarantee that any mutation is harmless. The team will use the result to finalize a site-directed-mutagenesis protocol and then compare folding, enzyme activity, and aggregation with unmodified SOD1.
+The set-aside must state the reason for each position, using the categories requested in the interview:
+
+- one of the six metal-coordinating histidines;
+- likely contact with the other SOD1 copy; or
+- insufficient confidence.
+
+The team will use the result to finalize a site-directed-mutagenesis protocol for ALS/SOD1 experiments. They will alter selected outer residues, compare folding, enzyme activity, and aggregation with unmodified SOD1, and use the result to study how the outer surface affects folding and aggregation while avoiding direct disruption of metal binding and the SOD1–SOD1 contact. A wrong call can make a mutant uninterpretable and cost weeks of work, reagents, cell work, and ALS-relevant interpretation.
+
+This is a screening decision, not a guarantee that any mutation is harmless. The files do not specify which substitutions to make; the analysis must identify positions suitable for testing, not define a substitution scheme.
 
 ## Protein and assembly
 
 - Protein: human SOD1 (superoxide dismutase [Cu-Zn]), UniProt P00441, gene SOD1.
 - Reference sequence: 154 amino-acid residues, numbered 1–154.
-- Model: predicted by AlphaFold, not experimentally determined; the mmCIF identifies it as an AlphaFold monomer model and reports global pLDDT 97.93.
-- Supplied structure: one chain, chain A, one 154-residue copy—not the complete biological paired enzyme.
-- Biological context from the interview: active SOD1 works as a pair of identical copies. The supplied file does not model or experimentally establish that paired assembly. The model therefore cannot by itself establish which apparent surface residues are outside the working dimer.
-- Construct identity at the bench is unverified: the files show the 154-residue human sequence and no tags, truncations, or engineered mutations, but no bench construct sequence or plasmid map was supplied.
+- Model: AlphaFold prediction, not an experimentally determined structure; the mmCIF reports global pLDDT 97.93.
+- Supplied structure: one chain, chain A, one 154-residue copy—not the complete paired form.
+- Biological context from the interview: SOD1 works as a pair of identical copies that clamp together to form the active enzyme. The file does not model or experimentally establish that paired assembly. It also does not model the copper chaperone or other cellular factors.
+- Construct identity at the bench is unverified: the files show the 154-residue human sequence and no added tags, truncations, or engineered mutations, but no bench construct sequence or plasmid map was supplied.
 
-## Files
+## Files and what each is
 
-- `ddls-week4-interview.md`: interview transcript and the owner's decision, constraints, and biological context.
-- `data/SOD1.fasta`: FASTA reference sequence, stated in the transcript to be the 154-amino-acid human SOD1 sequence.
-- `data/SOD1_alphafold_model.cif`: AlphaFold predicted 3D model for chain A. It maps residues 1–154 to the same human SOD1 reference accession, P00441, and contains coordinates and local pLDDT. For mmCIF parsing, use the `_atom_site.B_iso_or_equiv` B-factor column (and/or the local pLDDT metadata) as residue-level pLDDT.
-- `data/SOD1_alphafold_pae.json`: JSON pairwise confidence/error file. Its `predicted_aligned_error` value is a residue-pair matrix, with `max_predicted_aligned_error` 31.75. Lower PAE indicates a more certain relative placement; higher PAE indicates greater uncertainty. Use the matrix when assessing how regions or an interface sit relative to each other.
+- `ddls-week4-interview.md`: the raw interview transcript, including the owner's decision, requested presentation, exclusions, caveats, and failure modes.
+- `data/SOD1.fasta`: the 154-amino-acid human SOD1 reference sequence.
+- `data/SOD1_alphafold_model.cif`: the AlphaFold three-dimensional prediction for chain A and residues 1–154, with coordinates and confidence metadata. Residue-level pLDDT is in the mmCIF `_atom_site.B_iso_or_equiv` B-factor column (also represented by local pLDDT metadata). The file maps to P00441/SOD1_HUMAN and identifies an AlphaFold monomer model.
+- `data/SOD1_alphafold_pae.json`: the pairwise predicted aligned error matrix. Load its `predicted_aligned_error` matrix from JSON; it has one value for each residue pair and `max_predicted_aligned_error` 31.75. Lower values indicate a more certain relative relationship and higher values indicate more uncertainty. It is not a residue-existence or individual-residue-confidence measure.
 
 ## Exact owner claim and scope
 
-The owner's claim to be evaluated is: a residue is “available” when it is clearly on the outside of the model, has strong residue-level confidence, is not one of the metal-coordinating histidines, and is unlikely to be needed at the contact between the two SOD1 copies or for another essential function.
+The owner's claim is that an “available” residue is clearly on the outside of the model, has strong residue-level confidence, is not one of His46, His48, His63, His71, His80, or His120, and is unlikely to be needed at the contact between the two SOD1 copies or for another essential function.
 
-The claim concerns the outer-surface residues of the 154-residue SOD1 chain, especially their suitability for altering surface chemistry while avoiding direct disruption of metal binding, the SOD1–SOD1 paired contact, folding, or catalysis. The transcript does not specify the exact substitutions, so do not invent a substitution scheme.
+The claim concerns surface residues in the 154-residue SOD1 chain. It is intended to identify baseline positions whose alteration should not directly remove metal coordination or the SOD1–SOD1 contact, so changes in folding, activity, or aggregation are easier to interpret.
 
-## Evidence matched to each claim
+For every proposed candidate, preserve the original residue numbering and show:
 
-1. **Residue identity and model match:** compare FASTA and mmCIF sequences, lengths, chain, numbering, accession, organism, and construct metadata before interpreting any residue.
-2. **Fold/region placement:** report the relevant per-residue pLDDT from the mmCIF B-factor column. The global ~98 value is only a summary and must not replace local values.
-3. **How regions or copies sit together:** report relevant PAE matrix values. The supplied one-chain model cannot prove the dimer interface; interface claims require a paired model or experimental structure/assay, and must be labelled accordingly.
-4. **Outside/surface status:** derive it from the supplied coordinates using an explicitly stated, reproducible surface criterion; do not infer it from confidence alone or from the viewer image.
-5. **Functional exclusions:** set aside the six metal-coordinating histidines identified by the owner/transcript and any positions implicated by appropriate evidence as part of the SOD1–SOD1 contact or another essential function. Do not claim that the current files alone prove all such functional roles.
+- residue number;
+- residue identity;
+- the actual individual pLDDT value;
+- the reproducible surface criterion/result; and
+- the reasons it remains a candidate after the exclusion checks.
 
-## Checks that could break the decision
+## Confidence and evidence matched to claims
 
-- A mismatch between the FASTA and mmCIF sequence, chain, numbering, length, accession, or residue identities would invalidate residue mapping and the shortlist.
-- The bench construct may differ because it has not been provided; tags, truncations, mutations, or another isoform could change both numbering and interpretation.
-- The model is a monomer while the working enzyme is a pair. Apparent outside residues may be buried at the dimer contact. A single-chain PAE matrix cannot validate the biological paired arrangement.
-- The model is a prediction, not experimental proof. The image and global pLDDT do not establish the correct assembly, metal occupancy, activity, or mutation tolerance.
-- A surface designation does not prove a residue is functionally dispensable. Metal coordination, catalysis, folding, oligomerization, or other interactions may still be affected.
+1. **Protein and sequence identity:** compare FASTA and mmCIF sequence, length, chain, numbering, accession, organism, and residue identities before interpreting any position. Confirm the model is actually human SOD1 P00441, chain A, residues 1–154.
+2. **Fold or region confidence:** use the per-residue pLDDT from the mmCIF B-factor column. The global 97.93/approximately 98 value is only a summary and is not evidence that every residue has that confidence.
+3. **Relative placement of parts or possible interface:** use the relevant PAE matrix entries or summaries. A low/high PAE assessment must identify the residue pairs or regions being discussed. PAE from this single chain cannot establish the biological SOD1 dimer interface.
+4. **Surface status:** derive it from the coordinates using an explicit, reproducible surface criterion. An image or viewer appearance alone is not sufficient.
+5. **Metal-coordination exclusion:** set aside His46, His48, His63, His71, His80, and His120 exactly as numbered in the reference sequence.
+6. **SOD1–SOD1 contact exclusion:** the supplied monomer cannot prove this contact. Use an experimentally determined paired human SOD1 structure, if available to the analysis, as a consistency check and clearly distinguish that evidence from the AlphaFold monomer. Do not convert visual agreement into proof.
+7. **Functional safety:** do not claim that a candidate is functionally dispensable from surface appearance or pLDDT alone. Distinguish computational screening from experimental validation.
 
-## Definition of done
+## Checks that could break or challenge the result
 
-A complete analysis will be written under `results/` and will:
+Question the result if:
 
-1. state and verify that the model is human SOD1 P00441, chain A, residues 1–154, matching the FASTA;
-2. state that it is an AlphaFold prediction and a monomer, not an experimentally validated dimer;
-3. provide a reproducible ranked candidate table with residue number, amino-acid identity, surface criterion/result, per-residue pLDDT, and reasons for inclusion;
-4. provide a set-aside table with residue number, identity, exclusion reason, and the confidence evidence appropriate to that reason;
-5. use pLDDT for fold/region confidence and PAE for relative-placement/interface confidence, without substituting the global 97.93 score for either;
-6. explicitly flag the unverified bench construct and the missing paired-assembly validation; and
-7. distinguish computational candidates from experimentally established safe mutations, recommending validation through the owner's stated folding, activity, aggregation, metal-occupancy, and/or oligomerization checks where relevant.
+- an individual residue confidence is much lower than the overall approximately 98;
+- the position depends on an uncertain relationship in the PAE matrix;
+- it is near one of His46, His48, His63, His71, His80, or His120;
+- it appears available in the single-copy model but may contact the second SOD1 copy;
+- the sequence or bench construct differs from the 154-residue FASTA;
+- an experimental SOD1 structure places it differently.
+
+The following identity and assembly issues are unresolved and must be reported:
+
+- No bench construct sequence or plasmid map is available, so tags, truncations, mutations, and exact construct identity remain unverified.
+- The AlphaFold file is a monomer, while the working enzyme is a pair; the paired arrangement has not been tested here.
+- The prediction is not experimental proof of fold, metal occupancy, activity, oligomerization, or mutation tolerance.
+
+## Things that must not be done in the analysis
+
+- Do not use the overall approximately 98 score as the confidence value for every residue.
+- Do not select residues merely because they look exposed in a picture.
+- Do not forget any of the six specified histidines.
+- Do not assume the single-copy file reveals the contact surface of the second SOD1 copy.
+- Do not mix or silently alter FASTA and structure numbering.
+- Do not ignore the PAE JSON or report it without explaining its pairwise meaning.
+- Do not treat a visual experimental-structure comparison as proof.
+- Do not present candidates as guaranteed harmless mutations.
+- Do not silently “fix” missing bench tags, mutations, or truncations.
+- Do not invent a substitution scheme.
+
+## Required presentation and definition of done
+
+A complete analysis will be written under `results/` and will contain:
+
+1. a concise identity/assembly statement confirming human SOD1 P00441, chain A, residues 1–154, matching the FASTA, and stating that the model is an AlphaFold prediction of a monomer rather than an experimentally validated dimer;
+2. a compact ranked candidate table with original residue number, amino-acid identity, actual individual pLDDT, surface criterion/result, and brief inclusion rationale;
+3. a separate set-aside table with original residue number, identity, actual relevant confidence evidence, and the reason: metal-coordinating histidine, likely second-copy contact, or insufficient confidence;
+4. documented PAE checks for any claim about how parts sit together or about a possible interface;
+5. explicit flags for unverified bench construct identity and missing paired-assembly validation;
+6. a brief note that image/global confidence alone are insufficient; and
+7. a clear distinction between computational screening candidates and experimentally established safe mutations, with validation needs identified where appropriate.

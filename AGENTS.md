@@ -17,7 +17,21 @@
 
 ## Outputs
 
-Write generated analyses, tables, figures, and other deliverables under `results/`.
+Write generated analyses, tables, figures, and other deliverables under `results/`. The requested final presentation is a compact ranked candidate table and a separate set-aside table, with a brief statement that candidates are screening candidates rather than guaranteed harmless mutations.
+
+## Things that must NOT be done
+
+- Do not treat the overall approximately 98/global pLDDT as if every residue has that confidence.
+- Do not select residues solely because they look outside in an image or viewer.
+- Do not omit His46, His48, His63, His71, His80, or His120 from the metal-coordination set-aside.
+- Do not assume that the one-copy model establishes which residues contact the second SOD1 copy.
+- Do not mix FASTA and structure numbering, or silently renumber residues.
+- Do not ignore the PAE JSON, and do not report PAE without explaining that it concerns relative placement and uncertainty.
+- Do not treat a visual comparison with an experimental structure as proof; it is a consistency check unless supported by the relevant evidence.
+- Do not present computational candidates as guaranteed harmless mutations.
+- Do not silently add, remove, or “fix” tags, mutations, truncations, or other bench-construct details; the construct is unverified.
+- Do not invent substitutions, because the files do not specify the substitution scheme.
+- Do not report a structural answer without stating the model identity and the confidence evidence matching the claim.
 
 ## Version control
 
@@ -25,4 +39,4 @@ This folder is a git repository. Commit the current state before any big change,
 
 ## Confidence and identity rule
 
-Never report an answer about a structure without first reporting the confidence that matches the claim **and** confirming that the model is actually this protein. Use per-residue pLDDT for claims about a fold or region. Use PAE, especially relevant pairwise/interface values, for claims about how parts sit together. A high global score does not establish every residue, an assembly, or a biologically correct oligomeric interface. The supplied model is one chain; do not treat it as the SOD1 dimer without separate evidence.
+Never report an answer about a structure without first reporting the confidence that matches the claim **and** confirming that the model is actually this protein. Use per-residue pLDDT for claims about a fold or region. Use PAE, especially relevant pairwise/interface values, for claims about how parts sit together. A high global score does not establish every residue, an assembly, or a biologically correct oligomeric interface. The supplied model is one chain; do not treat it as the SOD1 dimer without separate evidence. When proposing each candidate, show its actual residue identity and individual pLDDT beside it, and document the checks that could challenge the result.
