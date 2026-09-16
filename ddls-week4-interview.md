@@ -3,7 +3,7 @@
 **Lab:** Interview a Structural-Biology Data Owner
 **Data owner:** Dr. Lena Brandt — Neurodegeneration researcher (SOD1 in ALS)
 **Student:** semt <semt@kth.se>
-**Exported:** 2026-09-16T12:27:52+00:00
+**Exported:** 2026-09-16T12:35:57+00:00
 
 > This is the record of your interview with the data owner. Hand it to your analyst agent as the raw source for `AGENTS.md` and `spec.md`.
 
@@ -182,3 +182,47 @@ And one more time, the confidence is predicted for the whole structure or an ave
 **Dr. Lena Brandt**:
 
 The confidence attached in the structure file is **residue-by-residue**: each amino acid has its own value. The “about 98” figure is a summary you saw for the model, likely an average or overall display value; it does not mean every residue has exactly 98 confidence. For mutagenesis, the individual values are the relevant check.
+
+**You**:
+
+And how do you want the information I gather with the analysis? What information do you want and how do you want it presented to you?
+
+**Dr. Lena Brandt**:
+
+I need a short ranked list of candidate residue numbers, with their residue identities and individual confidence values, plus a separate set-aside list. For each set-aside, state the reason—one of the six metal-coordinating histidines, likely contact with the other SOD1 copy, or insufficient confidence. A compact table is ideal, with a brief note that these are screening candidates rather than guaranteed harmless mutations.
+
+**You**:
+
+And is there something that might have you question the result?
+
+**Dr. Lena Brandt**:
+
+Yes. I would question a result if:
+
+- the residue’s individual confidence is much lower than the overall ~98;
+- its position depends on an uncertain relationship in the JSON matrix;
+- it is near one of the metal-coordinating histidines—His46, His48, His63, His71, His80, or His120;
+- it appears available on the single-copy model but may contact the second SOD1 copy;
+- the sequence or construct used at the bench differs from the 154-residue FASTA;
+- an experimentally determined SOD1 structure places it differently.
+
+The image and overall confidence are not enough on their own; I’d want those checks documented beside each candidate. Can your analysis compare the model with an experimental SOD1 structure as well as report the residue-level numbers?
+
+**You**:
+
+And what are the things that most not be done in the analysis that might skew the results?
+
+**Dr. Lena Brandt**:
+
+The biggest problems would be:
+
+- treating the overall **~98** as if every residue had that confidence;
+- selecting residues just because they look on the outside in the picture;
+- forgetting His46, His48, His63, His71, His80, and His120;
+- assuming this one-copy file tells us which outside residues touch the second SOD1 copy;
+- mixing numbering between the FASTA and the structure;
+- ignoring the pairwise confidence file or reporting it without explaining what it says;
+- treating a visual comparison with an experimental structure as proof rather than a consistency check;
+- presenting candidates as guaranteed harmless mutations.
+
+Also, don’t quietly “fix” missing tags, mutations, or truncations in the bench construct—the construct is still unverified. Can you preserve the original residue numbering and show the actual confidence value beside every proposed candidate?
