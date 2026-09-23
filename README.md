@@ -7,11 +7,11 @@ This repository contains work from the DDLS course, organized by week:
 
 ## Week 5
 
-The Week 5 app is a Streamlit application for exploring the PBMC 3k single-cell RNA-seq dataset. It supports interactive inspection of the data, dimensionality-reduction visualizations, clustering, and cluster-quality analysis.
+The Week 5 app is a Python application for exploring the PBMC 3k single-cell RNA-seq dataset. It supports interactive inspection of the data, dimensionality-reduction visualizations, clustering, and cluster-quality analysis.
 
 ### Run the app locally
 
-From the repository root:
+From inside the `Week5` folder, install the dependencies and run the Python script:
 
 ```bash
 cd Week5
@@ -19,10 +19,10 @@ python -m venv .venv
 source .venv/bin/activate       # macOS/Linux
 # .venv\\Scripts\\activate    # Windows
 pip install -r requirements.txt
-streamlit run app.py
+python app.py
 ```
 
-The terminal will provide a local URL, usually `http://localhost:8501`.
+The app will start locally and the terminal will show the address to open in a browser.
 
 The dataset is stored in `Week5/data/pbmc3k.h5ad`. Submission materials, including the app archive and analysis transcripts, are in `Week5/submissions/`.
 
