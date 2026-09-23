@@ -11,18 +11,22 @@ The Week 5 app is a Python application for exploring the PBMC 3k single-cell RNA
 
 ### Run the app locally
 
-From inside the `Week5` folder, install the dependencies and run the Python script:
+From inside the `Week5` folder, install the dependencies and start the app with Uvicorn:
 
 ```bash
 cd Week5
 python -m venv .venv
 source .venv/bin/activate       # macOS/Linux
-# .venv\\Scripts\\activate    # Windows
+# .venv\Scripts\activate      # Windows
 pip install -r requirements.txt
-python app.py
+python -m uvicorn app:app --port 8000
 ```
 
-The app will start locally and the terminal will show the address to open in a browser.
+Then open the app in a browser at:
+
+```text
+http://localhost:8000
+```
 
 The dataset is stored in `Week5/data/pbmc3k.h5ad`. Submission materials, including the app archive and analysis transcripts, are in `Week5/submissions/`.
 
